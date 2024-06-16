@@ -93,142 +93,65 @@ function actualizarSaldosIniciales() {
 }
 
 function calcularIntereses() {
-    const form = document.getElementById('interestForm');
-    const formData = new FormData(form);
+    const tae = parseFloat(document.getElementById('tae').value);
+    const saldos = Array.from(document.querySelectorAll('.saldo-final')).map(input => parseFloat(input.value));
 
-    fetch('calcular_intereses.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            Swal.fire({
-                title: 'Cálculo de Intereses',
-                html: `El rendimiento total bruto es: ${data.interes_total} €<br>El rendimiento Neto es: ${data.saldo_final} €<br>Recuerde que este cálculo es una simulación`,
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonText: 'Descargar CSV',
-                cancelButtonText: 'Cerrar'
-            }).then(result => {
-                if (result.isConfirmed) {
-                    generarCSV(data);
-                }
-            });
-        } else {
-            Swal.fire({
-                title: 'Error',
-                text: data.message,
-                icon: 'error'
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
+    if (isNaN(tae) || saldos.some(isNaN)) {
         Swal.fire({
             title: 'Error',
-            text: 'Ocurrió un error al calcular los intereses.',
-            icon: 'error'
+            text: 'Por favor, ingrese una TAE válida y asegúrese de que todos los saldos sean válidos.',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
         });
+        return;
+    }
+
+    let interes_total = 0;
+    const IRPF = 0.81;
+    const data = saldos.map((saldo, index) => {
+        const interes_diario = (saldo * tae) / (366 * 100);
+        interes_total += interes_diario;
+        const saldo_final = interes_total * IRPF;
+        return {
+            dia: index + 1,
+            saldo_inicial: saldo.toFixed(2),
+            interes_diario: interes_diario.toFixed(2),
+            interes_acumulado: interes_total.toFixed(2),
+            saldo_final: saldo_final.toFixed(2)
+        };
+    });
+
+    const saldo_final = interes_total * IRPF;
+
+    Swal.fire({
+        title: 'Cálculo de Intereses',
+        html: `El interés total generado es: ${interes_total.toFixed(2)} €<br>Descontando el 19 % de IRPF obtiene un dividendo de: ${saldo_final.toFixed(2)} €`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Descargar CSV',
+        cancelButtonText: 'Cerrar'
+    }).then(result => {
+        if (result.isConfirmed) {
+            generarCSV(data);
+        }
     });
 }
 
-// function calcularIntereses() {
-//     const tae = parseFloat(document.getElementById('tae').value);
-//     const saldos = Array.from(document.querySelectorAll('.saldo-final')).map(input => parseFloat(input.value));
-
-//     if (isNaN(tae) || saldos.some(isNaN)) {
-//         Swal.fire({
-//             title: 'Error',
-//             text: 'Por favor, ingrese una TAE válida y asegúrese de que todos los saldos sean válidos.',
-//             icon: 'error',
-//             confirmButtonText: 'Entendido'
-//         });
-//         return;
-//     }
-
-//     let interes_total = 0;
-//     const IRPF = 0.81;
-//     const data = saldos.map((saldo, index) => {
-//         const interes_diario = (saldo * tae) / (366 * 100);
-//         interes_total += interes_diario;
-//         const saldo_final = interes_total * IRPF;
-//         return {
-//             dia: index + 1,
-//             saldo_inicial: saldo.toFixed(2),
-//             interes_diario: interes_diario.toFixed(2),
-//             interes_acumulado: interes_total.toFixed(2),
-//             saldo_final: saldo_final.toFixed(2)
-//         };
-//     });
-
-//     const saldo_final = interes_total * IRPF;
-
-//     Swal.fire({
-//         title: 'Cálculo de Intereses',
-//         html: `El interés total generado es: ${interes_total.toFixed(2)} €<br>Descontando el 19 % de IRPF obtiene un dividendo de: ${saldo_final.toFixed(2)} €`,
-//         icon: 'success',
-//         showCancelButton: true,
-//         confirmButtonText: 'Descargar CSV',
-//         cancelButtonText: 'Cerrar'
-//     }).then(result => {
-//         if (result.isConfirmed) {
-//             generarCSV(data);
-//         }
-//     });
-// }
-
-// function generarCSV(data) {
-//     const csvContent = "data:text/csv;charset=utf-8," 
-//         + "Día,Saldo Inicial,Interés Diario,Interés Acumulado,Saldo Final\n"
-//         + data.map(d => `${d.dia},${d.saldo_inicial},${d.interes_diario},${d.interes_acumulado},${d.saldo_final}`).join("\n");
-
-//     const encodedUri = encodeURI(csvContent);
-//     const link = document.createElement("a");
-//     link.setAttribute("href", encodedUri);
-//     link.setAttribute("download", "intereses.csv");
-//     document.body.appendChild(link);
-
-//     link.click();
-//     document.body.removeChild(link);
-// }
+function formatNumber(num) {
+    return num.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 function generarCSV(data) {
-    fetch('generar_csv.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data: data })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            const link = document.createElement('a');
-            link.href = data.url;
-            link.download = 'intereses.csv';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            Swal.fire({
-                title: 'CSV Generado',
-                text: 'El archivo CSV ha sido generado y está listo para su descarga.',
-                icon: 'success'
-            });
-        } else {
-            Swal.fire({
-                title: 'Error',
-                text: data.message,
-                icon: 'error'
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error al generar el archivo CSV.',
-            icon: 'error'
-        });
-    });
+    const csvContent = "data:text/csv;charset=utf-8," 
+        + "Dia;Saldo Inicial;Interes Diario Bruto;Interes Acumulado Bruto; Interes Acumulado Neto\n"
+        + data.map(d => `${d.dia};${formatNumber(parseFloat(d.saldo_inicial))};${formatNumber(parseFloat(d.interes_diario))};${formatNumber(parseFloat(d.interes_acumulado))};${formatNumber(parseFloat(d.saldo_final))}`).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "intereses.csv");
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link);
 }
