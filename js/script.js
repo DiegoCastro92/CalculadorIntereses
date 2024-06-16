@@ -125,7 +125,7 @@ function calcularIntereses() {
 
     Swal.fire({
         title: 'Cálculo de Intereses',
-        html: `El interés total generado es: ${interes_total.toFixed(2)} €<br>Descontando el 19 % de IRPF obtiene un dividendo de: ${saldo_final.toFixed(2)} €`,
+        html: `El rendimiento bruto generado es: ${interes_total.toFixed(2)} €<br>El rendimiento neto generado es: ${saldo_final.toFixed(2)} €<br>Recuerde: Los cálculos proporcionados por esta herramienta son simulaciones y deben utilizarse solo con fines ilustrativos.`,
         icon: 'success',
         showCancelButton: true,
         confirmButtonText: 'Descargar CSV',
