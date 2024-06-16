@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Intereses Bancarios - Calcula el Rendimiento de tus Depósitos</title>
+    <meta name="description" content="Utiliza nuestra calculadora de intereses bancarios para calcular el rendimiento de tus depósitos de manera fácil y rápida. Descubre cuánto puedes ganar con tu ahorro.">
+    <meta name="keywords" content="calculadora de intereses bancarios, calcular rendimiento de depósito, intereses depósito bancario, rendimiento de ahorros">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+        <h1>Calculadora de Intereses Bancarios</h1>
+        <p>Calcula el rendimiento de tus depósitos de manera rápida y sencilla.</p>
+    </div>
+    </header>
+    <main>
+        <section id="calculadora">
+            <div class="container">
+                <h2>¿Cómo funciona nuestra calculadora?</h2>
+                <p>Ingresa los datos de tu depósito bancario para calcular los intereses que ganarás.</p>
+                <form id="dateForm">
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha de Inicio:</label>
+                        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_fin">Fecha de Fin:</label>
+                        <input type="date" id="fecha_fin" name="fecha_fin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="saldo_inicial">Saldo Inicial: <i class="fa fa-info-circle"  title="Establece el saldo que tiene el primer día que quiera empezar a calcular su rendimiento"></i></label>
+                        <input type="number" id="saldo_inicial" name="saldo_inicial" required>
+                    </div>
+                    <button type="button" onclick="generarCamposSaldo()">Generar Campos de Saldo</button>
+                </form>
+                <form id="interestForm" style="display:none;">
+                    <div id="saldosContainer">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Día</th>
+                                    <th>Saldo Inicial</th>
+                                    <th>Diferencia</th>
+                                    <th>Saldo Final</th>
+                                </tr>
+                            </thead>
+                            <tbody id="saldosBody">
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <label for="tae">TAE (%):</label>
+                        <input type="number" id="tae" name="tae" required>
+                    </div>
+                    <button type="button" onclick="calcularIntereses()">Calcular Intereses</button>
+                </form>
+                <div id="resultado"></div>
+            </div>
+        </section>
+        <section id="beneficios">
+            <div class="container">
+            <h2>Beneficios de usar nuestra calculadora</h2>
+            <ul>
+                <li>Fácil de usar</li>
+                <li>Resultados rápidos y precisos</li>
+                <li>Sin necesidad de registrarse</li>
+            </ul>
+        </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Calculadora de Intereses Bancarios. Todos los derechos reservados.</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
