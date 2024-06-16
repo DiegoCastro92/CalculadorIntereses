@@ -133,6 +133,66 @@ function calcularIntereses() {
     });
 }
 
+// function calcularIntereses() {
+//     const tae = parseFloat(document.getElementById('tae').value);
+//     const saldos = Array.from(document.querySelectorAll('.saldo-final')).map(input => parseFloat(input.value));
+
+//     if (isNaN(tae) || saldos.some(isNaN)) {
+//         Swal.fire({
+//             title: 'Error',
+//             text: 'Por favor, ingrese una TAE válida y asegúrese de que todos los saldos sean válidos.',
+//             icon: 'error',
+//             confirmButtonText: 'Entendido'
+//         });
+//         return;
+//     }
+
+//     let interes_total = 0;
+//     const IRPF = 0.81;
+//     const data = saldos.map((saldo, index) => {
+//         const interes_diario = (saldo * tae) / (366 * 100);
+//         interes_total += interes_diario;
+//         const saldo_final = interes_total * IRPF;
+//         return {
+//             dia: index + 1,
+//             saldo_inicial: saldo.toFixed(2),
+//             interes_diario: interes_diario.toFixed(2),
+//             interes_acumulado: interes_total.toFixed(2),
+//             saldo_final: saldo_final.toFixed(2)
+//         };
+//     });
+
+//     const saldo_final = interes_total * IRPF;
+
+//     Swal.fire({
+//         title: 'Cálculo de Intereses',
+//         html: `El interés total generado es: ${interes_total.toFixed(2)} €<br>Descontando el 19 % de IRPF obtiene un dividendo de: ${saldo_final.toFixed(2)} €`,
+//         icon: 'success',
+//         showCancelButton: true,
+//         confirmButtonText: 'Descargar CSV',
+//         cancelButtonText: 'Cerrar'
+//     }).then(result => {
+//         if (result.isConfirmed) {
+//             generarCSV(data);
+//         }
+//     });
+// }
+
+// function generarCSV(data) {
+//     const csvContent = "data:text/csv;charset=utf-8," 
+//         + "Día,Saldo Inicial,Interés Diario,Interés Acumulado,Saldo Final\n"
+//         + data.map(d => `${d.dia},${d.saldo_inicial},${d.interes_diario},${d.interes_acumulado},${d.saldo_final}`).join("\n");
+
+//     const encodedUri = encodeURI(csvContent);
+//     const link = document.createElement("a");
+//     link.setAttribute("href", encodedUri);
+//     link.setAttribute("download", "intereses.csv");
+//     document.body.appendChild(link);
+
+//     link.click();
+//     document.body.removeChild(link);
+// }
+
 function generarCSV(data) {
     fetch('generar_csv.php', {
         method: 'POST',
