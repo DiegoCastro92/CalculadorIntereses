@@ -8,18 +8,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <header>
         <div class="container">
-        <h1>Calculadora de Intereses Bancarios</h1>
-        <p>Calcula el rendimiento de tus depósitos de manera rápida y sencilla.</p>
-    </div>
+            <h1>Calculadora de Intereses Bancarios</h1>
+            <p>Calcula el rendimiento de tus depósitos de manera rápida y sencilla.</p>
+        </div>
     </header>
     <main>
         <section id="calculadora">
-            <div class="container">
+            <div class="container-sm">
                 <h2>¿Cómo funciona nuestra calculadora?</h2>
                 <p>Ingresa los datos de tu depósito bancario para calcular los intereses que ganarás.</p>
                 <form id="dateForm">
@@ -39,12 +47,13 @@
                 </form>
                 <form id="interestForm" style="display:none;">
                     <div id="saldosContainer">
-                        <table>
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Día</th>
                                     <th>Saldo Inicial</th>
-                                    <th>Diferencia</th>
+                                    <th>Incremento</th>
+                                    <th>Decremento</th>
                                     <th>Saldo Final</th>
                                 </tr>
                             </thead>
@@ -60,17 +69,18 @@
                     <button type="button" onclick="calcularIntereses()">Calcular Intereses</button>
                 </form>
                 <div id="resultado"></div>
+                <p class="simulation-note">Nota: Los cálculos proporcionados por esta herramienta son simulaciones y deben utilizarse solo con fines ilustrativos.</p>
             </div>
         </section>
         <section id="beneficios">
             <div class="container">
-            <h2>Beneficios de usar nuestra calculadora</h2>
-            <ul>
-                <li>Fácil de usar</li>
-                <li>Resultados rápidos y precisos</li>
-                <li>Sin necesidad de registrarse</li>
-            </ul>
-        </div>
+                <h2>Beneficios de usar nuestra calculadora</h2>
+                <ul>
+                    <li>Fácil de usar</li>
+                    <li>Resultados rápidos y precisos</li>
+                    <li>Sin necesidad de registrarse</li>
+                </ul>
+            </div>
         </section>
     </main>
     <footer>

@@ -35,7 +35,7 @@ header p, main p {
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
-    overflow-x: auto; /* Añadido para permitir el desplazamiento horizontal */
+    overflow-x: auto;
 }
 
 input, textarea {
@@ -73,6 +73,7 @@ th, td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
+    min-width: 80px;
 }
 
 th {
@@ -93,6 +94,7 @@ th {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
+    min-width: 80px; /* Asegurar un ancho mínimo */
 }
 
 #saldosContainer {
@@ -109,4 +111,27 @@ footer p {
 
 .form-group {
     margin-bottom: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
+
+.info-icon {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.info-icon:hover {
+    color: #0056b3;
+}
+
+.simulation-note {
+    color: #ff0000;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
