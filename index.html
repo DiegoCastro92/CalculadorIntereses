@@ -19,29 +19,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Calculadora de Intereses Bancarios</h1>
-            <p>Calcula el rendimiento de tus depósitos de manera rápida y sencilla.</p>
-        </div>
-    </header>
     <main>
+        <section id="header">
+            <div class="container">
+                <h1 style="text-align: center;">Calculadora de Intereses Bancarios</h1>
+                <p>Calcula el rendimiento de tus depósitos de manera rápida y sencilla.</p>
+            </div>
+        </section>
+        <section id="beneficios">
+            <div class="container">
+                <h2>Beneficios de usar esta aplicación</h2>
+                <ul>
+                    <li>Fácil de usar</li>
+                    <li>Resultados rápidos y precisos</li>
+                    <li>Sin necesidad de registrarse</li>
+                    <li>No se almacena la información aportada</li>
+                    <li>El código fuente es accesible desde <a href="https://github.com/DiegoCastro92/CalculadorIntereses">esta url</a></li>
+                </ul>
+            </div>
+        </section>
         <section id="calculadora">
-            <div class="container-sm">
+            <div class="container col-md-12">
                 <h2>¿Cómo funciona nuestra calculadora?</h2>
                 <p>Ingresa los datos de tu depósito bancario para calcular los intereses que ganarás.</p>
                 <form id="dateForm">
-                    <div class="form-group">
-                        <label for="fecha_inicio">Fecha de Inicio:</label>
-                        <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+                    <div class="form-group col-md-12">
+                        <label class="form-group col-md-6" for="fecha_inicio">Fecha de Inicio:</label>
+                        <input class="form-group col-md-6" type="date" id="fecha_inicio" name="fecha_inicio" required>
                     </div>
-                    <div class="form-group">
-                        <label for="fecha_fin">Fecha de Fin:</label>
-                        <input type="date" id="fecha_fin" name="fecha_fin" required>
+                    <div class="form-group col-md-12">
+                        <label class="form-group col-md-6" for="fecha_fin">Fecha de Fin:</label>
+                        <input class="form-group col-md-6" type="date" id="fecha_fin" name="fecha_fin" required>
                     </div>
-                    <div class="form-group">
-                        <label for="saldo_inicial">Saldo Inicial: <i class="fa fa-info-circle"  title="Establece el saldo que tiene el primer día que quiera empezar a calcular su rendimiento"></i></label>
-                        <input type="number" id="saldo_inicial" name="saldo_inicial" required>
+                    <div class="form-group col-md-12">
+                        <label class="form-group col-md-6" for="saldo_inicial">Saldo Inicial: <i class="fa fa-info-circle"  title="Establece el saldo que tiene el primer día que quiera empezar a calcular su rendimiento"></i></label>
+                        <input class="form-group col-md-6" type="number" id="saldo_inicial" name="saldo_inicial" required>
                     </div>
                     <button type="button" onclick="generarCamposSaldo()">Generar Campos de Saldo</button>
                 </form>
@@ -68,23 +80,13 @@
                     </div>
                     <button type="button" onclick="calcularIntereses()">Calcular Intereses</button>
                 </form>
-                <div id="resultado"></div>
-                <p class="simulation-note">Nota: Los cálculos proporcionados por esta herramienta son simulaciones y deben utilizarse solo con fines ilustrativos.</p>
-            </div>
-        </section>
-        <section id="beneficios">
-            <div class="container">
-                <h2>Beneficios de usar nuestra calculadora</h2>
-                <ul>
-                    <li>Fácil de usar</li>
-                    <li>Resultados rápidos y precisos</li>
-                    <li>Sin necesidad de registrarse</li>
-                </ul>
+                <div id="resultado" class="col-md-12"></div>
+                <p class="simulation-note">Disclaimer: Los cálculos proporcionados por esta herramienta son simulaciones y deben utilizarse solo con fines ilustrativos.</p>
             </div>
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 Calculadora de Intereses Bancarios. Todos los derechos reservados.</p>
+        <p>&copy; 2024 Calculadora de Intereses Bancarios by <a href="https://github.com/DiegoCastro92">Diego Castro</a>. Todos los derechos reservados.</p>
     </footer>
     <script src="js/script.js"></script>
 </body>

@@ -126,12 +126,14 @@ function calcularIntereses() {
     const data = saldos.map((saldo, index) => {
         const interes_diario = (saldo * tae) / (366 * 100);
         interes_total += interes_diario;
+        neto_diario = interes_diario * IRPF;
         const saldo_final = interes_total * IRPF;
         return {
             dia: index + 1,
             saldo_inicial: saldo.toFixed(2),
             interes_diario: interes_diario.toFixed(2),
             interes_acumulado: interes_total.toFixed(2),
+            neto_diario: neto_diario.toFixed(2),
             saldo_final: saldo_final.toFixed(2)
         };
     });
@@ -140,7 +142,9 @@ function calcularIntereses() {
 
     Swal.fire({
         title: 'Cálculo de Intereses',
-        html: `El rendimiento bruto generado en el periodo es: ${interes_total.toFixed(2)} €<br> El rendimiento neto genenrado en el periodo es: ${saldo_final.toFixed(2)} €<br><br>Recuerde: Los cálculos proporcionados por esta herramienta son simulaciones y deben utilizarse con fines ilustrativos.`,
+        html: `El <strong>rendimiento bruto</strong> generado en el periodo es: <strong>${interes_total.toFixed(2)} €</strong><br><br> 
+        El <strong>rendimiento neto</strong> generado en el periodo es: <strong>${saldo_final.toFixed(2)} €</strong><br><br>
+        <strong>Recuerde:</strong> Los cálculos proporcionados por esta herramienta son simulaciones y deben utilizarse con fines ilustrativos. Puede descargarse los resultados en fichero CSV pulsando el butón de abajo`,
         icon: 'success',
         showCancelButton: true,
         confirmButtonText: 'Descargar CSV',
@@ -158,8 +162,8 @@ function formatNumber(num) {
 
 function generarCSV(data) {
     const csvContent = "data:text/csv;charset=utf-8," 
-        + "Día;Saldo Inicial;Interés Diario;Interés Acumulado;Saldo Final\n"
-        + data.map(d => `${d.dia};${formatNumber(parseFloat(d.saldo_inicial))};${formatNumber(parseFloat(d.interes_diario))};${formatNumber(parseFloat(d.interes_acumulado))};${formatNumber(parseFloat(d.saldo_final))}`).join("\n");
+        + "Dia;Saldo Inicial;Interes Bruto Diario;Interes Bruto Acumulado;Interes Neto Diario;Interes Neto Acumulado\n"
+        + data.map(d => `${d.dia};${formatNumber(parseFloat(d.saldo_inicial))};${formatNumber(parseFloat(d.interes_diario))};${formatNumber(parseFloat(d.interes_acumulado))};${formatNumber(parseFloat(d.neto_diario))};${formatNumber(parseFloat(d.saldo_final))}`).join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
